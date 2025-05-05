@@ -1,27 +1,30 @@
-// public/script.js
-document.getElementById('send-button').addEventListener('click', async () => {
-    const input = document.getElementById('user-input');
-    const message = input.value.trim();
-    if (!message) return;
+const chatForm = document.getElementById('chat-form');
+const userInput = document.getElementById('user-input');
+const chatBox = document.getElementById('chat-box');
+const chatContainer = document.getElementById('chat-container');
+
+chatForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const userText = userInput.value.trim();
+  if (!userText) return;
+
+  addMessage(userText, 'user');
+  userInput.value = '';
   
-    mostrarMensaje("Tú", message);
-    input.value = "";
-  
-    const res = await fetch('/api/chat', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ prompt: message })
-    });
-  
-    const data = await res.json();
-    mostrarMensaje("Bot", data.reply);
+  const res = await fetch('/api/chat', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ prompt: userText })
   });
-  
-  function mostrarMensaje(who, text) {
-    const messagesDiv = document.getElementById('messages');
-    const div = document.createElement('div');
-    div.textContent = `${who}: ${text}`;
-    messagesDiv.appendChild(div);
-    messagesDiv.scrollTop = messagesDiv.scrollHeight;
-  }
-  
+
+  const data = await res.json();
+  addMessage(data.reply, 'bot');
+});
+
+function addMessage(text, sender) {
+  const message = document.createElement('div');
+  message.classList.add('message', sender);
+  message.textContent = text;
+  chatBox.appendChild(message);
+  chatBox.scrollTop = chatBox.scrollHeight;
+}

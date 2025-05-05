@@ -1,18 +1,22 @@
-<!-- public/index.html -->
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <title>Chatbot con OpenRouter</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chatbot</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="chat-container">
-    <div id="messages"></div>
-    <input type="text" id="user-input" placeholder="Escribe tu mensaje...">
-    <button id="send-button">Enviar</button>
+  <div id="chat-wrapper">
+    <div id="chat-container">
+      <div id="chat-header">Asistente</div>
+      <div id="chat-box"></div>
+      <form id="chat-form">
+        <input type="text" id="user-input" placeholder="Escribe algo..." autocomplete="off" />
+        <button type="submit">Enviar</button>
+      </form>
+    </div>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
